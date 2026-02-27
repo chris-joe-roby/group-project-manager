@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Profile</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f7fb;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 520px;
+            margin: 48px auto;
+            background: #fff;
+            padding: 28px 32px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        }
+        h2 {
+            margin-top: 0;
+            color: #1f2a44;
+        }
+        label {
+            display: block;
+            margin: 14px 0 6px;
+            font-weight: 600;
+        }
+        input, select {
+            width: 100%;
+            padding: 10px 12px;
+            border-radius: 8px;
+            border: 1px solid #ccd3e0;
+            font-size: 14px;
+        }
+        button {
+            margin-top: 18px;
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            background: #2d6cdf;
+            color: #fff;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        .error {
+            background: #ffecec;
+            border: 1px solid #ffb3b3;
+            color: #a10000;
+            padding: 10px 12px;
+            border-radius: 8px;
+            margin-bottom: 14px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Create Your Student Profile</h2>
+
+        {% if error %}
+        <div class="error">{{ error }}</div>
+        {% endif %}
+
+        <form method="POST">
+            <label for="name">Name</label>
+            <input id="name" type="text" name="name" value="{{ form_data.name | default('') }}" required>
+
+            <label for="email">Email</label>
+            <input id="email" type="email" name="email" value="{{ form_data.email | default('') }}" required>
+
+            <label for="skills">Skills</label>
+            <input id="skills" type="text" name="skills" placeholder="Python, UI, Research" value="{{ form_data.skills | default('') }}" required>
+
+            <label for="role">Preferred Role</label>
+            <select id="role" name="role" required>
+                {% set selected_role = form_data.role | default('') %}
+                <option value="" disabled {% if not selected_role %}selected{% endif %}>Select a role</option>
+                <option value="Coder" {% if selected_role == 'Coder' %}selected{% endif %}>Coder</option>
+                <option value="Designer" {% if selected_role == 'Designer' %}selected{% endif %}>Designer</option>
+                <option value="Presenter" {% if selected_role == 'Presenter' %}selected{% endif %}>Presenter</option>
+                <option value="Tester" {% if selected_role == 'Tester' %}selected{% endif %}>Tester</option>
+                <option value="Leader" {% if selected_role == 'Leader' %}selected{% endif %}>Leader</option>
+            </select>
+
+            <button type="submit">Save Profile</button>
+        </form>
+    </div>
+
+</body>
+</html>
