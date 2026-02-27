@@ -1,44 +1,36 @@
-from backend.models import Student
-from collections import defaultdict
+from backend.models import db, Student, ProjectGroup, GroupMember
+
 
 def get_students():
     students = Student.query.all()
-    data = []
-    for s in students:
-        data.append({
-            "id": s.id,
-            "name": s.name,
-            "skills": s.skills.split(",")
-        })
-    return data
-def create_groups(students, group_size):
-    num_groups = len(students) // group_size
-    groups = [[] for _ in range(num_groups)]
+    names = [s.name for s in students]
+    print("STUDENTS:", names)
+    return names
 
-    # classify by main skill
-    skill_buckets = defaultdict(list)
-    for s in students:
-        skill_buckets[s["skills"][0]].append(s)
 
-    # round robin distribute
-    index = 0
-    for skill in skill_buckets:
-        for student in skill_buckets[skill]:
-            groups[index % num_groups].append(student)
-            index += 1
+def create_groups(students, group_size=4):
+    groups = []
+    for i in range(0, len(students), group_size):
+        groups.append(students[i:i+group_size])
 
+    print("GROUPS:", groups)
     return groups
 
-from backend.models import db, ProjectGroup, GroupMember
 
 def save_groups(groups):
-    for g in groups:
-        group = ProjectGroup()
-        db.session.add(group)
+    # clear old groups
+    GroupMember.query.delete()
+    ProjectGroup.query.delete()
+
+    for group in groups:
+        new_group = ProjectGroup()
+        db.session.add(new_group)
         db.session.flush()
 
-        for student in g:
-            member = GroupMember(student_id=student["id"], group_id=group.id)
-            db.session.add(member)
+        for member in group:
+            db.session.add(GroupMember(
+                student_name=member,
+                group_id=new_group.id
+            ))
 
     db.session.commit()

@@ -2,22 +2,78 @@
 <html>
 <head>
     <title>Group Project Manager</title>
+
+<style>
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background: #f4f6f9;
+}
+
+button {
+    padding: 12px 25px;
+    font-size: 16px;
+    background: #2f80ed;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+button:hover { background: #1366d6; }
+
+.groups-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+    margin: 40px;
+}
+
+.group-card {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0px 4px 15px rgba(0,0,0,0.12);
+}
+
+.group-card h3 { color: #2f80ed; }
+.group-card ul { list-style: none; padding: 0; }
+.group-card li { padding: 6px 0; border-bottom: 1px solid #eee; }
+</style>
 </head>
-<body style="font-family: Arial; text-align:center; margin-top:100px">
 
-    <h1>Group Project Manager</h1>
+<body>
 
-    <button onclick="generateGroups()" style="padding:15px 30px; font-size:18px">
-        Generate Groups
-    </button>
+<h1>Group Project Manager</h1>
 
-    <h2 id="result"></h2>
+<button onclick="generateGroups()">Generate Groups</button>
+<h3 id="result"></h3>
+
+<div id="groups-container" class="groups-grid"></div>
 
 <script>
 async function generateGroups() {
-    const res = await fetch("/generate-groups");
-    const data = await res.json();
+
+    const response = await fetch("/api/generate-groups", { method: "POST" });
+    const data = await response.json();
+
     document.getElementById("result").innerText = data.message;
+
+    const container = document.getElementById("groups-container");
+    container.innerHTML = "";
+
+    data.groups.forEach((group, index) => {
+        let card = `<div class="group-card">
+                        <h3>Group ${index + 1}</h3>
+                        <ul>`;
+
+        group.forEach(member => {
+            card += `<li>${member}</li>`;
+        });
+
+        card += `</ul></div>`;
+        container.innerHTML += card;
+    });
 }
 </script>
 

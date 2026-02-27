@@ -1,3 +1,12 @@
+# Python cache
 __pycache__/
 *.pyc
+
+# Database
+instance/
+*.db
 database.db
+
+# Environment
+.env
+venv/
