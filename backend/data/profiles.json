@@ -1,17 +1,11 @@
 [
   {
-    "name": "Nimitha S Nair",
-    "email": "24ct366@mgits.ac.in",
-    "skills": "Python, Java, C, Mysql",
-    "role": "Leader",
-    "submitted_at": "2026-02-27T11:31:34.848338Z"
-  },
-  {
     "name": "Aniroodh Nair",
     "email": "24ct254@mgits.ac.in",
     "skills": "React, Python",
-    "role": "Tester",
-    "submitted_at": "2026-02-27T15:16:32.940214Z"
+    "role": "Coder (Frontend)",
+    "submitted_at": "2026-02-27T15:16:32.940214Z",
+    "updated_at": "2026-02-27T16:58:53.111203Z"
   },
   {
     "name": "Chris Joe Ruby",
@@ -26,5 +20,19 @@
     "skills": "Python, Java, C, Mysql",
     "role": "Presenter",
     "submitted_at": "2026-02-27T15:47:17.504352Z"
+  },
+  {
+    "name": "Nimitha S Nair",
+    "email": "24ct366@mgits.ac.in",
+    "skills": "Python, Java, C, Mysql",
+    "role": "Documentation Lead",
+    "submitted_at": "2026-02-27T16:45:06.772018Z"
+  },
+  {
+    "name": "Latha V",
+    "email": "24ct336@mgits.ac.in",
+    "skills": "Python, Java, C, Mysql, C++",
+    "role": "Team Leader",
+    "submitted_at": "2026-02-27T17:05:04.025147Z"
   }
 ]
