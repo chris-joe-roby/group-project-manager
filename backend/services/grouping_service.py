@@ -1,0 +1,31 @@
+from models import Student
+from collections import defaultdict
+
+def get_students():
+    students = Student.query.all()
+    data = []
+    for s in students:
+        data.append({
+            "id": s.id,
+            "name": s.name,
+            "skills": s.skills.split(",")
+        })
+    return data
+def create_groups(students, group_size):
+    num_groups = len(students) // group_size
+    groups = [[] for _ in range(num_groups)]
+
+    # classify by main skill
+    skill_buckets = defaultdict(list)
+    for s in students:
+        skill_buckets[s["skills"][0]].append(s)
+
+    # round robin distribute
+    index = 0
+    for skill in skill_buckets:
+        for student in skill_buckets[skill]:
+            groups[index % num_groups].append(student)
+            index += 1
+
+    return groups
+
